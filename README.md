@@ -10,7 +10,7 @@ O script de testes requer os pacotes `feh` e `inotify-tools.`
 
 - Trabalha de forma recursiva passando por todos os subdiretórios e arquivos
 - Inclui um script para testes automatizados durante o desenvolvimento
-- Codifica e decodifica em base64 para evitar erros de codificação
+- Realiza o _padding_ dos dados para evitar erros por tamanho de bloco
 
 ----
 Imagens da demonstração por: F. Nemos, _Europas bekannteste Schmetterlinge_ (1895). Domínio público.
