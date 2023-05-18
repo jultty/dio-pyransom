@@ -1,5 +1,6 @@
 import os
 import pyaes
+import base64
 
 key = b"0000000000000000"
 aes = pyaes.AESModeOfOperationCTR(key)
@@ -17,12 +18,14 @@ def traverse(root_dir):
 
             if (filename_split[1] == '.aes'):
                 file = open(filepath, "rb")
-                contents = file.read()
+                encoded_contents = file.read()
                 file.close()
 
                 os.remove(filepath)
 
-                decrypted_contents = aes.decrypt(contents)
+                encrypted_contents = base64.b64decode(encoded_contents)
+                decrypted_contents = aes.decrypt(encrypted_contents)
+
                 out = open(f"{filename_split[0]}", "wb")
                 print('writing decrypted contents for ' + f)
                 out.write(decrypted_contents)
