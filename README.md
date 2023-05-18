@@ -4,7 +4,7 @@ Desafio de projeto **"Criando um Ransomware com Python"**, desenvolvido para a f
 
 Para rodar os testes, use `./dev gui` ou `./dev cli`. O script monitora as mudanças no diretório, e exibe as imagens ou faz verificações usando um hash sha256.
 
-O script de testes requer os pacotes `feh` e `inotify-tools.`
+O script de testes requer os pacotes `feh` e `inotify-tools`.
 
 **Melhorias realizadas**:
 
