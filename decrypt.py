@@ -1,5 +1,6 @@
 import os
 from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
 
 key = b"0000000000000000"
 
@@ -21,13 +22,14 @@ def traverse(root_dir):
         encrypted_file.close()
 
         cipher = AES.new(key, AES.MODE_EAX, nonce)
-        decrypt_data = cipher.decrypt_and_verify(ciphertext, tag)
+        plain_data = unpad(cipher.decrypt_and_verify(ciphertext, tag),
+                           AES.block_size)
 
         os.remove(filepath)
 
         plain_file = filename_split[0]
         plain_file = open(f'{plain_file}', "wb")
-        plain_file.write(decrypt_data)
+        plain_file.write(plain_data)
         plain_file.close()
 
 traverse('test_root')

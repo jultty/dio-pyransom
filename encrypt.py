@@ -24,7 +24,8 @@ def traverse(root_dir):
         os.remove(filepath)
 
         cipher = AES.new(key, AES.MODE_EAX, get_random_bytes(16))
-        ciphertext, tag = cipher.encrypt_and_digest(plain_data)
+        ciphertext, tag = cipher.encrypt_and_digest(
+            pad(plain_data, AES.block_size))
 
         out_filename = filepath + '.aes'
 
