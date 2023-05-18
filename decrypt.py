@@ -1,34 +1,33 @@
 import os
-import pyaes
-import base64
+from Crypto.Cipher import AES
 
 key = b"0000000000000000"
-aes = pyaes.AESModeOfOperationCTR(key)
 
 def traverse(root_dir):
-    print('traversing dir: ' + root_dir)
-    for path, subdirs, files in os.walk(root_dir):
-        for subdir in subdirs:
-            print('found subdir: ' + subdir)
-            traverse(os.path.join(path, subdir))
-        for f in files:
-            print('found file: ' + f)
-            filepath = os.path.join(path, f)
-            filename_split = os.path.splitext(filepath)
+  print('traversing: ' + root_dir)
+  for path, subdirs, files in os.walk(root_dir):
+    for subdir in subdirs:
+      traverse(os.path.join(path, subdir))
+    for f in files:
+      print('found file: ' + f)
+      filepath = os.path.join(path, f)
+      filename_split = os.path.splitext(filepath)
 
-            if (filename_split[1] == '.aes'):
-                file = open(filepath, "rb")
-                encoded_contents = file.read()
-                file.close()
+      if (filename_split[1] == '.aes'):
+        encrypted_file = open(filepath, "rb")
+        nonce = encrypted_file.read(16)
+        tag = encrypted_file.read(16)
+        ciphertext = encrypted_file.read(-1)
+        encrypted_file.close()
 
-                os.remove(filepath)
+        cipher = AES.new(key, AES.MODE_EAX, nonce)
+        decrypt_data = cipher.decrypt_and_verify(ciphertext, tag)
 
-                encrypted_contents = base64.b64decode(encoded_contents)
-                decrypted_contents = aes.decrypt(encrypted_contents)
+        os.remove(filepath)
 
-                out = open(f"{filename_split[0]}", "wb")
-                print('writing decrypted contents for ' + f)
-                out.write(decrypted_contents)
-                out.close()
+        plain_file = filename_split[0]
+        plain_file = open(f'{plain_file}', "wb")
+        plain_file.write(decrypt_data)
+        plain_file.close()
 
 traverse('test_root')

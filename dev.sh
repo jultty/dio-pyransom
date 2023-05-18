@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 fmt_green="\e[32m"
 fmt_red="\e[31m"
 fmt_yellow="\e[33m"
@@ -29,7 +31,6 @@ else
 
     rm -f test_root/*.jpg
     rm -f test_root/*.aes
-    rm -f test_root/erebia_aethiops
     unzip -qo test_root.zip -d test_root
   }
 
@@ -39,13 +40,13 @@ else
     while true; do
       reset_test_root
       info_text "Displaying pre-test state" &&
-      feh test_root/erebia_aethiops.jpg &&
+      feh test_root/*.jpg &&
       info_text "Testing encryption" &&
-      python encrypt.py && pass &&
+      python encrypt.py && 
       info_text "Testing decryption" &&
       python decrypt.py &&
       info_text "Displaying results" &&
-      feh test_root/erebia_aethiops.jpg && pass || fail
+      feh test_root/*.jpg && pass || fail
       inotifywait -e modify .
       clear
      done
@@ -57,13 +58,11 @@ else
       info_text "Getting pre-test state" &&
       sha256sum test_root/* > sha256sums &&
       info_text "Testing encryption" &&
-      python encrypt.py && pass &&
+      python encrypt.py && 
       info_text "Testing decryption" &&
       python decrypt.py &&
       info_text "Displaying results" &&
       sha256sum -c sha256sums && pass || fail
-      sleep 1
-      echo
       inotifywait -e modify .
       clear
      done
