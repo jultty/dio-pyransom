@@ -2,9 +2,11 @@
 
 Desafio de projeto **"Criando um Ransomware com Python"**, desenvolvido para a formação _Cybersecurity Specialist_ da DIO.
 
-- `path`: caminho atual do diretório sendo visitado
-- `subdirs`: lista dos subdiretórios no caminho visitado
-- `files`: lista dos arquivos no subdiretório visitado
+Melhorias realizadas:
+
+- Trabalha de forma recursiva passando por todos os subdiretórios e arquivos
+- Inclui um script para testes automatizados durante o desenvolvimento
+- Codifica e decodifica em base64 para evitar erros de codificação
 
 ----
 Imagens da demonstração por: F. Nemos, _Europas bekannteste Schmetterlinge_ (1895). Domínio público.
