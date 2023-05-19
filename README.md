@@ -1,4 +1,4 @@
-# dio-pyransom
+# pyransom
 
 Desafio de projeto **"Criando um Ransomware com Python"**, desenvolvido para a formação _Cybersecurity Specialist_ da DIO.
 
