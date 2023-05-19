@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pyransom"
+version = "0.2.0"
+description = "A recursive encryptor and decryptor using AES."
+authors = ["jultty <juno.t@tuta.io>"]
+readme = "README.md"
+repository = "https://github.com/jultty/dio-pyransom"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pycryptodome = "^3.18.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
