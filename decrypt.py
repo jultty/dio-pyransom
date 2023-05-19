@@ -9,6 +9,7 @@ def traverse(root_dir):
   for path, subdirs, files in os.walk(root_dir):
     for subdir in subdirs:
       traverse(os.path.join(path, subdir))
+      print('exiting subdir: ' + subdir)
     for f in files:
       print('found file: ' + f)
       filepath = os.path.join(path, f)

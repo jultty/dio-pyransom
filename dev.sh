@@ -40,13 +40,13 @@ else
     while true; do
       reset_test_root
       info_text "Displaying pre-test state" &&
-      feh test_root/*.jpg &&
+      feh test_root/* &&
       info_text "Testing encryption" &&
       python encrypt.py && 
       info_text "Testing decryption" &&
       python decrypt.py &&
       info_text "Displaying results" &&
-      feh test_root/*.jpg && pass || fail
+      feh test_root/* && pass || fail
       inotifywait -e modify .
       clear
      done
@@ -56,7 +56,8 @@ else
     while true; do
       reset_test_root
       info_text "Getting pre-test state" &&
-      sha256sum test_root/* > sha256sums &&
+      sha256sum test_root/*.jpg > sha256sums &&
+      sha256sum test_root/subdir/*.jpg >> sha256sums &&
       info_text "Testing encryption" &&
       python encrypt.py && 
       info_text "Testing decryption" &&
